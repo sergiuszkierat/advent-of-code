@@ -26,7 +26,13 @@ def part1(lines: Seq[String]) =
     Option.when(possible)(game.number)
   }.sum
 
-def part2(lines: Seq[String]) = lines.map(calibration(_, firstNumber2, lastNumber2)).sum
+def part2(lines: Seq[String]) =
+  lines.map { line =>
+    val game = parseGame(line)
+    val fewest = fewestNumberOfCubes(game.cubes)
+    println(s"Game ${game.number} : $fewest")
+    fewest.map(_.howMany).product
+  }.sum
 
 def parseGame(line: String): Game =
   val (gameNo, gameSets) = line match {
@@ -41,3 +47,8 @@ def cubes(setOfCubes: String): Seq[Cube] =
 
 def isPossible(cubes: Seq[Cube]): Boolean =
   cubes.forall(cube => cube.howMany <= cube.color.max)
+
+def fewestNumberOfCubes(cubes: Seq[Seq[Cube]]): Seq[Cube] =
+  cubes.flatten.groupBy(_.color).map {
+    case (_, cubes) => cubes.maxBy(_.howMany)
+  }.toSeq
