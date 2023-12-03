@@ -30,7 +30,6 @@ def part2(lines: Seq[String]) =
   lines.map { line =>
     val game = parseGame(line)
     val fewest = fewestNumberOfCubes(game.cubes)
-    println(s"Game ${game.number} : $fewest")
     fewest.map(_.howMany).product
   }.sum
 
