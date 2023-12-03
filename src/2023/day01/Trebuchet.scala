@@ -1,3 +1,5 @@
+package day02
+
 import scala.util.matching.Regex
 
 @main
